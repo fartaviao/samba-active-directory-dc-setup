@@ -19,7 +19,7 @@ if [ -f /etc/samba/smb.conf ]; then
   sudo mv /etc/samba/smb.conf /etc/samba/smb.conf.backup
   echo "*** Backup created: /etc/samba/smb.conf.backup ***"
 else
-  echo "smb.conf file not found, no backup needed.!"
+  echo "smb.conf file not found!"
 fi
 
 echo "*** Service configuration completed. ***"
