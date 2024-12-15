@@ -1,6 +1,7 @@
 # Samba Active Directory Domain Controller Setup
 
-This document provides a complete guide for setting up a Samba server as an Active Directory Domain Controller (AD DC). The setup process begins with configuring network parameters using the dedicated Ubuntu IPv4 setup repository and progresses to complete Samba configuration.
+This document provides a complete guide for setting up a Samba server as an Active Directory Domain Controller (AD DC).
+The setup process begins with configuring network parameters using the dedicated Ubuntu IPv4 setup repository and progresses to complete Samba configuration.
 
 Table of Contents:
 
@@ -150,7 +151,8 @@ Confirm by selecting <OK>.
 
 Additional Notes:
 
-Multi-Server Setup: If your topology expands in the future with additional domain controllers or Kerberos servers, you would revisit this step and include all relevant server hostnames.
+Multi-Server Setup: If your topology expands in the future with additional domain controllers or Kerberos servers,
+you would revisit this step and include all relevant server hostnames.
 Current Setup: For this configuration, since there is only one server (dc1server.fartaviao.com), it is used for all Kerberos-related roles.
 The initial setup script installs the necessary packages, including: samba, smbclient, chrony, and dnsutils.
 
@@ -175,7 +177,8 @@ Script Highlights:
 
 Configure Kerberos.
 
-The following steps will guide you through provisioning the domain manually instead of running a single combined command. This approach ensures clarity and makes it easier to verify each configuration parameter.
+The following steps will guide you through provisioning the domain manually instead of running a single combined command. 
+This approach ensures clarity and makes it easier to verify each configuration parameter.
 
 - Run the Provision Command.
 
@@ -206,7 +209,8 @@ Select the DNS backend to use. For this setup, SAMBA_INTERNAL is sufficient:
 
 - Specify the DNS Forwarder.
 
-Enter the DNS forwarder IP address to use for resolving external domains. If your network setup has a local DNS server, use its IP. Otherwise, enter a public DNS like google 8.8.8.8:
+Enter the DNS forwarder IP address to use for resolving external domains. If your network setup has a local DNS server
+use its IP. Otherwise, enter a public DNS like google 8.8.8.8:
 (write 'none' to disable forwarding) [192.168.223.11]: 8.8.8.8
 
 - Set the Administrator Password.
@@ -316,7 +320,8 @@ Security:
 After setup, adjust file permissions and firewall rules for production use.
 
 Contributing!
-Contributions are welcome! Please fork the repository, make your changes, and submit a pull request. Feel free to report any issues or suggest improvements.
+Contributions are welcome! Please fork the repository, make your changes, and submit a pull request.
+Feel free to report any issues or suggest improvements.
 
 Acknowledgments
 Special thanks to the Samba community for their comprehensive documentation and support.
