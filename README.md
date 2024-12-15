@@ -86,7 +86,8 @@ To get started, follow these steps:
    sudo ./scripts/3-samba-ad-kerberos-ntp.sh
    ```
 
-For detailed documentation and step-by-step guide, refer to the [main documentation](https://github.com/fartaviao/samba-active-directory-dc-setup/blob/main/samba-ad-dc-setup.txt).
+For detailed documentation and step-by-step guide, refer to the [main documentation](https://github.com/fartaviao/samba-active-directory-dc-setup/blob/main/samba-ad-dc-setup.txt)
+as well you can check the [Screenshots](https://github.com/fartaviao/samba-active-directory-dc-setup/blob/main/Screenshots/Screenshots.md) for better clarity of the process.
 
 ---
 
