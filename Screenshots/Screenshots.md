@@ -5,42 +5,42 @@ Below you have some visual guides to better understand the functionality and out
 ---
 
 ## Network Configurator Script
-![Network Configurator Script](https://raw.githubusercontent.com/fartaviao/samba-active-directory-dc-setup/refs/heads/main/screenshot-01.png)
+![Network Configurator Script](https://raw.githubusercontent.com/fartaviao/samba-active-directory-dc-setup/refs/heads/main/Screenshots/Screenshot-01.PNG)
 
 ---
 
 ## Kerberos Realm
-![Kerberos Realm](https://raw.githubusercontent.com/fartaviao/samba-active-directory-dc-setup/refs/heads/main/screenshot-02.png)
+![Kerberos Realm](https://raw.githubusercontent.com/fartaviao/samba-active-directory-dc-setup/refs/heads/main/Screenshots/Screenshot-02.PNG)
 
 ---
 
 ## Kerberos Server or Servers
-![Kerberos Server or Servers](https://raw.githubusercontent.com/fartaviao/samba-active-directory-dc-setup/refs/heads/main/screenshot-03.png)
+![Kerberos Server or Servers](https://raw.githubusercontent.com/fartaviao/samba-active-directory-dc-setup/refs/heads/main/Screenshots/Screenshot-03.PNG)
 
 ---
 
 ## Kerberos Administrative Server
-![Kerberos Administrative Server](https://raw.githubusercontent.com/fartaviao/samba-active-directory-dc-setup/refs/heads/main/screenshot-04.png)
+![Kerberos Administrative Server](https://raw.githubusercontent.com/fartaviao/samba-active-directory-dc-setup/refs/heads/main/Screenshots/Screenshot-04.PNG)
 
 ---
 
 ## Configure Samba Services
-![Configure Samba Services](https://raw.githubusercontent.com/fartaviao/samba-active-directory-dc-setup/refs/heads/main/screenshot-05.png)
+![Configure Samba Services](https://raw.githubusercontent.com/fartaviao/samba-active-directory-dc-setup/refs/heads/main/Screenshots/Screenshot-05.PNG)
 
 ---
 
 ## Domain Provisioning Process
-![Domain Provisioning Process](https://raw.githubusercontent.com/fartaviao/samba-active-directory-dc-setup/refs/heads/main/screenshot-06.png)
+![Domain Provisioning Process](https://raw.githubusercontent.com/fartaviao/samba-active-directory-dc-setup/refs/heads/main/Screenshots/Screenshot-06.PNG)
 
 ---
 
 ## Configure Kerberos and NTP services
-![Configure Kerberos and NTP services](https://raw.githubusercontent.com/fartaviao/samba-active-directory-dc-setup/refs/heads/main/screenshot-07.png)
+![Configure Kerberos and NTP services](https://raw.githubusercontent.com/fartaviao/samba-active-directory-dc-setup/refs/heads/main/Screenshots/Screenshot-07.PNG)
 
 ---
 
 ## Validation and Testing
-![Validation and Testing](https://raw.githubusercontent.com/fartaviao/samba-active-directory-dc-setup/refs/heads/main/screenshot-08.png)
+![Validation and Testing](https://raw.githubusercontent.com/fartaviao/samba-active-directory-dc-setup/refs/heads/main/Screenshots/Screenshot-08.PNG)
 
 ---
 
