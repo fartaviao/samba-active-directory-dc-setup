@@ -2,7 +2,7 @@
 
 # Samba Active Directory Domain Controller Setup
 
-Easily deploy a Samba Active Directory Domain Controller with interactive scripts and best practices designed for centralized authentication and domain management.
+This repository contains scripts and instructions to configure Samba as an Active Directory Domain Controller on Ubuntu. Ideal for IT professionals and cybersecurity students exploring domain configurations in Linux environments.
 
 ---
 
