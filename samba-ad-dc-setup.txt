@@ -70,12 +70,12 @@ The first step in setting up the Samba AD DC is configuring the network to ensur
 
 Steps to Configure the Network
 
-(1) Clone the Ubuntu IPv4 Setup Repository:
+(1) Clone the Samba Active Directory Domain Controller Setup Repository:
 git clone https://github.com/fartaviao/samba-active-directory-dc-setup/.git
 cd samba-active-directory-dc-setup
 
 (2) Run the Network Configurator Script:
-sudo scripts/chmod +x 0-netplan-configurator.sh
+sudo chmod +x scripts/0-netplan-configurator.sh
 sudo ./scripts/0-netplan-configurator.sh
 
 (3) Follow the On-Screen Prompts:
@@ -96,7 +96,6 @@ Test connectivity:
 ping -c2 8.8.8.8
 ping -c2 google.com
 
-
 Script Highlights:
 Automatically generates a valid Netplan YAML configuration.
 Logs all actions to `/var/log/netplan-config.log` for troubleshooting.
@@ -112,7 +111,7 @@ Validation after completing the network configuration:
 (1) Update the System.
 
 Ensure the system is updated:
-apt update && apt upgrade -y
+sudo apt update && apt upgrade -y
 
 (2) Configure the Hostname.
 
