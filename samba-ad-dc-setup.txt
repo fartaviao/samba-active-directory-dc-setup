@@ -1,0 +1,327 @@
+# Samba Active Directory Domain Controller Setup
+
+This document provides a complete guide for setting up a Samba server as an Active Directory Domain Controller (AD DC). The setup process begins with configuring network parameters using the dedicated Ubuntu IPv4 setup repository and progresses to complete Samba configuration.
+
+Table of Contents:
+
+1. Prerequisites
+2. Project Structure
+3. Step 1: Network Configuration
+4. Step 2: Samba AD DC Setup
+5. Validation and Testing
+6. Conclusion and Additional Resources
+
+---------------------------------
+
+1. Prerequisites
+
+Software and Hardware Requirements:
+- Operating System: Ubuntu Server 20.04 or later.
+- Static IP Address: Example: 192.168.0.1
+- Domain Name: Example: fartaviao.com
+- Server Name: Example: dc1server
+- Forwarder DNS: Example: 8.8.8.8
+
+Permissions
+- Root user privileges or access via `sudo`.
+
+Required Tools
+- SSH connection to the server.
+- Basic packages: nano, curl, git.
+
+Cloning the Repository
+
+To access the scripts and documentation, clone the following GitHub repositories:
+
+**Samba AD DC Setup:**
+git clone https://github.com/fartaviao/samba-active-directory-dc-setup.git
+cd samba-active-directory-dc-setup
+
+---------------------------------
+
+2. Project Structure
+
+samba-ad-dc-setup/
+├── README.md                         # Welcome page
+├── samba-ad-dc-setup.txt             # Main documentation
+├── scripts/
+│   ├── 0-netplan-configurator.sh     # Network setup interactive script
+│   ├── 1-samba-initial-setup.sh      # Samba initial setup script
+│   ├── 2-samba-ad-services.sh        # Samba services configuration script
+│   └── 3-samba-ad-kerberos-ntp.sh    # Kerberos and NTP configuration script
+├── configs/
+│   ├── smb.conf                      # Example of smb.conf file
+│   └── resolv.conf                   # Example of resolv.conf file
+└── Screenshoots/                     # For better clarity
+    ├── screenshot-01.png
+    ├── screenshot-02.png
+    ├── screenshot-03.png
+    ├── screenshot-04.png
+    ├── screenshot-05.png
+    ├── screenshot-06.png
+    ├── screenshot-07.png
+    └── screenshot-08.png
+
+---------------------------------
+
+3. Step 1: Network Configuration
+
+The first step in setting up the Samba AD DC is configuring the network to ensure proper communication and connectivity.
+
+Steps to Configure the Network
+
+(1) Clone the Ubuntu IPv4 Setup Repository:
+git clone https://github.com/fartaviao/samba-active-directory-dc-setup/.git
+cd samba-active-directory-dc-setup
+
+(2) Run the Network Configurator Script:
+sudo scripts/chmod +x 0-netplan-configurator.sh
+sudo ./scripts/0-netplan-configurator.sh
+
+(3) Follow the On-Screen Prompts:
+- Select the network interface to configure.
+- Choose between **Static IP** or **DHCP** configuration.
+- If configuring a Static IP, provide:
+- IP address (e.g., 192.168.0.1/24)
+- Gateway (e.g., 192.168.0.1)
+- DNS servers (e.g., 8.8.8.8, 8.8.4.4).
+
+(4) Apply and Verify Configuration:
+The script automatically applies the configuration using `netplan apply`.
+
+Verify the configuration using:
+ip addr show <interface_name>
+
+Test connectivity:
+ping -c2 8.8.8.8
+ping -c2 google.com
+
+
+Script Highlights:
+Automatically generates a valid Netplan YAML configuration.
+Logs all actions to `/var/log/netplan-config.log` for troubleshooting.
+
+Validation after completing the network configuration:
+- Ensure the system has a static IP or valid DHCP-assigned address.
+- Verify DNS resolution and gateway connectivity.
+
+---------------------------------
+
+4. Step 2: Samba AD DC Setup
+
+(1) Update the System.
+
+Ensure the system is updated:
+apt update && apt upgrade -y
+
+(2) Configure the Hostname.
+
+Run the 1-samba-initial-setup.sh script to configure the hostname, /etc/hosts, and basic network settings:
+sudo chmod +x scripts/1-samba-initial-setup.sh
+sudo ./scripts/1-samba-initial-setup.sh
+
+Script Highlights:
+
+- Sets the hostname to dc1server.
+- Configures /etc/hosts with the server's static IP.
+- Updates /etc/resolv.conf to use local and external DNS servers.
+
+(3) Configure Kerberos Authentication.
+
+After running the 1-samba-initial-setup.sh script, you will be prompted to configure Kerberos authentication. Follow these steps:
+
+Set the Default Realm:
+
+When prompted, enter the realm FARTAVIAO.COM (in uppercase, matching the DNS domain)
+Confirm by selecting <OK>
+
+Set Kerberos Servers:
+
+Enter the hostname of your Kerberos server(s). If you have multiple servers in your topology, list them here, separated by spaces. For example:
+dc1server.fartaviao.com dc2server.fartaviao.com
+
+Since this setup includes only one server, enter "dc1server.fartaviao.com" only.
+Confirm by selecting <OK>
+
+Set the Administrative Server:
+
+Enter the hostname of the administrative (password-changing) server. This is typically the primary domain controller.
+For a single-server setup, enter "dc1server.fartaviao.com"
+Confirm by selecting <OK>.
+
+Additional Notes:
+
+Multi-Server Setup: If your topology expands in the future with additional domain controllers or Kerberos servers, you would revisit this step and include all relevant server hostnames.
+Current Setup: For this configuration, since there is only one server (dc1server.fartaviao.com), it is used for all Kerberos-related roles.
+The initial setup script installs the necessary packages, including: samba, smbclient, chrony, and dnsutils.
+
+---
+
+(4) Configuring Samba
+
+Configure Samba Services.
+
+Run the 2-samba-ad-services.sh script:
+sudo chmod +x scripts/2-samba-ad-services.sh
+sudo ./scripts/2-samba-ad-services.sh
+
+Script Highlights:
+
+- Disables unnecessary services (smbd, nmbd, winbind).
+- Enables and starts the samba-ad-dc service.
+
+---
+
+(5) Critical Service Configuration
+
+Configure Kerberos.
+
+The following steps will guide you through provisioning the domain manually instead of running a single combined command. This approach ensures clarity and makes it easier to verify each configuration parameter.
+
+- Run the Provision Command.
+
+Begin the domain provisioning process by entering:
+sudo samba-tool domain provision
+
+You will be prompted to input several parameters step by step.
+
+- Specify the Realm.
+
+When prompted for the Realm, enter your fully qualified domain name in uppercase:
+[FARTAVIAO.COM]: FARTAVIAO.COM
+
+- Specify the Domain.
+
+Next, specify the Domain Name. This is the NetBIOS name of your domain, typically a simplified version of the realm in uppercase:
+[FARTAVIAO]: FARTAVIAO
+
+- Set the Server Role.
+
+Choose the Server Role for this server. For a domain controller, enter:
+(dc, member, standalone) [dc]: dc
+
+- Configure the DNS Backend.
+
+Select the DNS backend to use. For this setup, SAMBA_INTERNAL is sufficient:
+(SAMBA_INTERNAL, BIND9_FLATFILE, BIND9_DLZ, NONE) [SAMBA_INTERNAL]: SAMBA_INTERNAL
+
+- Specify the DNS Forwarder.
+
+Enter the DNS forwarder IP address to use for resolving external domains. If your network setup has a local DNS server, use its IP. Otherwise, enter a public DNS like google 8.8.8.8:
+(write 'none' to disable forwarding) [192.168.223.11]: 8.8.8.8
+
+- Set the Administrator Password.
+
+Set a strong password for the Administrator account, and confirm it:
+Administrator password: ********
+Retype password: ********
+
+- Configure Kerberos and NTP services.
+
+Run the 3-samba-ad-kerberos-ntp.sh script:
+sudo chmod +x scripts/3-samba-ad-kerberos-ntp.sh
+sudo ./scripts/3-samba-ad-kerberos-ntp.sh
+
+Script Highlights:
+
+- Configures /etc/krb5.conf.
+- Restarts the NTP service (Chrony) for time synchronization.
+- Validates DNS records and Kerberos services.
+
+---------------------------------
+
+5. Validation and Testing
+
+(1) Verify the Domain.
+
+Run the following commands to ensure the domain is configured properly:
+sudo samba-tool domain level show
+smbclient -L localhost -N
+
+(2) Test Kerberos.
+
+Authenticate with Kerberos and check the ticket:
+kinit administrator@FARTAVIAO.COM
+klist
+
+(3) Verify DNS.
+
+Check DNS records to confirm proper setup:
+host -t A fartaviao.com
+host -t A dc1server
+host -t SRV _ldap._tcp.fartaviao.com
+host -t SRV _kerberos._udp.fartaviao.com
+
+(4) Additional samba administration commands.
+
+Login to the server via smb
+sudo smbclient //localhost/netlogon -U 'administrator'
+
+Change administrator user password
+sudo samba-tool user setpassword administrator
+
+Verify the integrity of the Samba configuration file.
+testparm
+
+Check Windows AD DC 2008 functionality
+sudo samba-tool domain level show
+
+Create Samba AD user
+sudo samba-tool user create <user_name>
+
+List Samba AD users
+sudo samba-tool user list
+
+Delete a user
+samba-tool user delete <user_name>
+
+List Samba AD computers
+sudo samba-tool computer list
+
+Delete Samba AD computer
+sudo samba-tool computer delete <computer_name>
+
+Create group
+samba-tool group add <group_name>
+
+List groups
+samba-tool group list
+
+List group members
+samba-tool group listmembers 'Domain Admins'
+
+Add member to 'Domain Admins':
+sudo samba-tool group addmembers "Domain Admins" <user_name>
+
+Add a member to a group
+samba-tool group addmembers <group_name> <user_name>
+
+Remove a member from a group
+samba-tool group removemembers <group_name> <user_name>
+---------------------------------
+
+6. Conclusion and Additional Resources
+
+Summary.
+
+With this guide, you have successfully configured a Samba server as an Active Directory Domain Controller.
+The modular scripts and step-by-step process allow for easy replication and customization for different environments.
+
+Recommended Resources:
+Samba Official Documentation --> https://www.samba.org/samba/docs/
+Netplan Documentation --> https://netplan.io/
+
+Additional Notes.
+
+Security:
+After setup, adjust file permissions and firewall rules for production use.
+
+Contributing!
+Contributions are welcome! Please fork the repository, make your changes, and submit a pull request. Feel free to report any issues or suggest improvements.
+
+Acknowledgments
+Special thanks to the Samba community for their comprehensive documentation and support.
+
+© 2024 Fausto Artavia Ocampo
+
+---------------------------------
